@@ -1,0 +1,4 @@
+GET /madremia?type=bananas&minrating=4 HTTP/1.1
+Host: fruits.com
+Accept: */*
+

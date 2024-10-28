@@ -1,5 +1,5 @@
 class Request
-  attr_reader :method, :resource, :headers, :version, :params
+  attr_reader :method, :resource, :headers, :version, :params, :path
 
   def initialize(request_string)
     header_section, body_section = request_string.split("\n\n", 2)
@@ -12,7 +12,7 @@ class Request
       if line == lines[0]
         @method, @resource, @version = line.split(" ")
         @method = @method.downcase.to_sym
-
+        @path = @resource.split("?")[0]
         query_string = @resource.split("?")[1]
 
         if query_string
