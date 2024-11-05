@@ -9,46 +9,47 @@ class Request
 
     @headers = {}
     @params = {}
-    parse_first_line(line)
-
-    if query_string
-      parse_params(params_string, query_string)
-    end
-  end
-
-    def parse_first_line(line)
-      @method, @resource, @version = line.split(' ')
-      @method = @method.downcase.to_sym
-      return @method, @resource, @version
-    end
-
-    def parse_params(params_string, query_string)
-      params_string = query_string.split('&')
-      params_string.map do |param|
-        key, value = param.split('=')
-        @params[key] = value
-      end
-    end
 
     lines.map do |line|
       if line == lines[0]
-        
-        @path = @resource.split('?')[0]
-        query_string = @resource.split('?')[1]
-
+        parse_first_line(line)
       else
-        @headers[line.split(': ')[0]] = line.split(': ')[1]
+        parse_headers(line)
       end
+    end
 
-      next unless body_section
+    if @resource.include?('?')
+      @path, query_string = @resource.split('?', 2)
+      parse_get_params(query_string)
+    else
+      @path = @resource
+    end
 
-      def post_params(body_section)
-        body_section.split('&').map do |param|
-          key, value = param.split('=')
-          @params[key] = value
-        end
-      end
+    parse_post_params(body_section) if body_section
+  end
 
+  def parse_first_line(line)
+    @method, @resource, @version = line.split(' ')
+    @method = @method.downcase.to_sym
+    [@method, @resource, @version]
+  end
+
+  def parse_headers(line)
+    @headers[line.split(': ')[0]] = line.split(': ')[1]
+  end
+
+  def parse_get_params(query_string)
+    params_string = query_string.split('&')
+    params_string.map do |param|
+      key, value = param.split('=')
+      @params[key] = value
+    end
+  end
+
+  def parse_post_params(body_section)
+    body_section.split('&').map do |param|
+      key, value = param.split('=')
+      @params[key] = value
     end
   end
 end
