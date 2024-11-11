@@ -1,29 +1,23 @@
 # frozen_string_literal: true
 
+# Klassen Request ansvarar för att analysera en HTTP-begäran från en rå sträng och bryta ner den
+# i komponenter som HTTP-metod, resursväg, headers, version och parametrar.
+# Klassen stödjer både GET- och POST-parametrar, och extraherar dem från query-strängen
+# eller från begärans kropp beroende på typ av förfrågan.
 class Request
   attr_reader :method, :resource, :headers, :version, :params, :path
 
   def initialize(request_string)
     header_section, body_section = request_string.split("\n\n", 2)
     lines = header_section.split("\n")
-
     @headers = {}
     @params = {}
 
-    lines.map do |line|
-      if line == lines[0]
-        parse_first_line(line)
-      else
-        parse_headers(line)
-      end
-    end
+    lines.map { |line| line == lines[0] ? parse_first_line(line) : parse_headers(line) }
 
-    if @resource.include?('?')
-      @path, query_string = @resource.split('?', 2)
-      parse_get_params(query_string)
-    else
-      @path = @resource
-    end
+    @path, query_string = @resource.include?('?') ? @resource.split('?', 2) : [@resource, nil]
+
+    @resource.include?('?') ? parse_get_params(query_string) : @path = @resource
 
     parse_post_params(body_section) if body_section
   end
