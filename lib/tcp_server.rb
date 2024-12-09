@@ -30,21 +30,21 @@ class HTTPServer
       request = Request.new(data)
       route = @router.match_route(request)
       if route
-        puts 'HTTP/1.1 200'
+        html = '<h1>Hello, World!</h1>'
+        status = 200
       else
-        puts 'HTTP/1.1 404'
+        html = '<h1>Oh no, World!</h1>'
+        status = 404
       end
 
       # Nedanstående bör göras i er Response-klass
-      html = '<h1>Hello, World!</h1>'
 
-      session.print "HTTP/1.1 200\r\n"
+      session.print "HTTP/1.1 #{status}\r\n"
       session.print "Content-Type: text/html\r\n"
       session.print "\r\n"
       session.print html
 
       # session.print response.to_s
-      puts ' i loopen'
       session.close
     end
   end
