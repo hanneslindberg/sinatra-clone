@@ -29,8 +29,16 @@ describe 'Router' do # rubocop:disable Metrics/BlockLength
     _(matched_route[:path]).must_equal '/login'
   end
 
-  it 'returns nil for unmatched routes' do
-    @router.add_route(:get, '/mango') { 'Madremia route' }
+  it 'returns nil for unmatched method' do
+    @router.add_route(:get, '/notfound') { 'Madremia route' }
+    unmatched_request = Request.new("POST /notfound HTTP/1.1\r\nHost: example.com\r\n\r\n")
+
+    matched_route = @router.match_route(unmatched_request)
+    _(matched_route).must_equal nil
+  end
+
+  it 'returns nil for unmatched path' do
+    @router.add_route(:post, '/mango') { 'Madremia route' }
     unmatched_request = Request.new("POST /notfound HTTP/1.1\r\nHost: example.com\r\n\r\n")
 
     matched_route = @router.match_route(unmatched_request)
