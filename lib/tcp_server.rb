@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'socket'
 require_relative 'request'
 require_relative 'router'
@@ -29,13 +31,13 @@ class HTTPServer
 
       request = Request.new(data)
       route = @router.match_route(request)
-      if route
-        html = '<h1>Hello, World!</h1>'
-        status = 200
-      else
-        html = '<h1>Oh no, World!</h1>'
-        status = 404
-      end
+      # if route
+      #   html = '<h1>Hello, World!</h1>'
+      #   status = 200
+      # else
+      #   html = '<h1>Oh no, World!</h1>'
+      #   status = 404
+      # end
 
       # Nedanstående bör göras i er Response-klass
 
