@@ -30,8 +30,7 @@ describe 'Router' do # rubocop:disable Metrics/BlockLength
   end
 
   it 'returns nil for unmatched routes' do
-    @router.add_route(:get, '/madremia') { 'Madremia route' }
-    binding.break
+    @router.add_route(:get, '/mango') { 'Madremia route' }
     unmatched_request = Request.new("POST /notfound HTTP/1.1\r\nHost: example.com\r\n\r\n")
 
     matched_route = @router.match_route(unmatched_request)

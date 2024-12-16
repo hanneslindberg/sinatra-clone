@@ -13,7 +13,7 @@
       <img src="./assets/0.13.1/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-12-16T09:49:27+01:00">2024-12-16T09:49:27+01:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-12-16T17:40:21+01:00">2024-12-16T17:40:21+01:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -29,7 +29,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         2.93
+         2.88
        </span>
     </span> hits/line
     )
@@ -83,11 +83,11 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#4b2c694c7398781eac2434f4d1a8a9441c4d9c2e" class="src_link" title="lib/router.rb">lib/router.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">30</td>
+            <td class="cell--number">35</td>
             <td class="cell--number">15</td>
             <td class="cell--number">15</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">2.33</td>
+            <td class="cell--number">2.20</td>
             
           </tr>
         
@@ -919,21 +919,21 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="5" data-linenumber="19">
+          <li class="covered" data-hits="4" data-linenumber="19">
             
-              <span class="hits">5</span>
-            
-
+              <span class="hits">4</span>
             
 
-            <code class="ruby">      next unless route[:method] == request.method</code>
+            
+
+            <code class="ruby">      return nil unless route[:method] == request.method</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="20">
+          <li class="covered" data-hits="2" data-linenumber="20">
             
-              <span class="hits">3</span>
+              <span class="hits">2</span>
             
 
             
@@ -948,7 +948,7 @@
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -958,7 +958,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      # next unless route[:method] == request.method</code>
           </li>
         </div>
       
@@ -968,7 +968,7 @@
 
             
 
-            <code class="ruby">    # @routes.find { |route| route[:method] == request.method &amp;&amp; route[:path] == base_path }</code>
+            <code class="ruby">      # return route if route[:path] == base_path</code>
           </li>
         </div>
       
@@ -978,7 +978,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -988,7 +988,7 @@
 
             
 
-            <code class="ruby">end</code>
+            <code class="ruby">      # return nil</code>
           </li>
         </div>
       
@@ -998,12 +998,62 @@
 
             
 
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="27">
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="27">
+          <li class="never" data-hits="" data-linenumber="28">
+            
+
+            
+
+            <code class="ruby">    # @routes.find { |route| route[:method] == request.method &amp;&amp; route[:path] == base_path }</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="29">
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="30">
+            
+
+            
+
+            <code class="ruby">end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="31">
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="32">
             
               <span class="hits">1</span>
             
@@ -1015,7 +1065,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="28">
+          <li class="never" data-hits="" data-linenumber="33">
             
 
             
@@ -1025,7 +1075,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="29">
+          <li class="covered" data-hits="1" data-linenumber="34">
             
               <span class="hits">1</span>
             
@@ -1037,7 +1087,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="30">
+          <li class="covered" data-hits="1" data-linenumber="35">
             
               <span class="hits">1</span>
             
