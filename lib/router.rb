@@ -1,11 +1,15 @@
+# frozen_string_literal: true
+
 require_relative 'request'
 require 'debug'
 
 class Router
-  def add_route(method, path, &block)
+  def initialize
     @routes = []
+  end
+
+  def add_route(method, path, &block)
     @routes << { method: method, path: path, block: block }
-    binding.break
   end
 
   def match_route(request)
@@ -20,5 +24,7 @@ class Router
   end
 end
 
-Router.new.add_route('GET', '/') { '<h1> HEJ </h1>' }
-Router.new.add_route('POST', '/banan') { '<h2> DÅ </h2>' }
+router = Router.new
+
+router.add_route('GET', '/') { '<h1> HEJ </h1>' }
+router.add_route('POST', '/banan') { '<h2> DÅ </h2>' }
