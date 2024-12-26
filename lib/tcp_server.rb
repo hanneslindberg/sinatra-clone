@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'socket'
+require 'debug'
 require_relative 'request'
 require_relative 'router'
 
@@ -24,6 +25,7 @@ class HTTPServer
       while (line = session.gets) && line !~ /^\s*$/
         data += line
       end
+
       puts 'RECEIVED REQUEST'
       puts '-' * 40
       puts data
@@ -31,6 +33,7 @@ class HTTPServer
 
       request = Request.new(data)
       route = @router.match_route(request)
+
       if route
         html = '<h1>Hello, World!</h1>'
         status = 200
