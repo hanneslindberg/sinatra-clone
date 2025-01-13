@@ -2,6 +2,7 @@
 
 require 'socket'
 require 'debug'
+require 'erb'
 require_relative 'request'
 require_relative 'router'
 
@@ -16,7 +17,7 @@ class HTTPServer
 
     @router = Router.new
 
-    @router.add_route(:get, '/') do
+    @router.add_route(:get, '/') do # detta ser ut som en get-request
       erb(:"views/index")
     end
 
@@ -35,7 +36,9 @@ class HTTPServer
       route = @router.match_route(request)
 
       if route
-        html = '<h1>Hello, World!</h1>'
+        # html = '<h1>Hello, World!</h1>'
+        html_template = File.read('views/index.erb')
+        html = ERB.new(html_template).result(binding)
         status = 200
       else
         html = '<h1>Oh no, World!</h1>'
@@ -43,7 +46,6 @@ class HTTPServer
       end
 
       # Nedanstående bör göras i er Response-klass
-
       session.print "HTTP/1.1 #{status}\r\n"
       session.print "Content-Type: text/html\r\n"
       session.print "\r\n"
