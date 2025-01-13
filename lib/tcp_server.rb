@@ -11,6 +11,11 @@ class HTTPServer
     @port = port
   end
 
+  def erb(html_file)
+    file = html_file.to_s + '.erb'
+    ERB.new(File.read(file)).result(binding)
+  end
+
   def start
     server = TCPServer.new(@port)
     puts "Listening on #{@port}"
@@ -19,6 +24,10 @@ class HTTPServer
 
     @router.add_route(:get, '/') do # detta ser ut som en get-request
       erb(:"views/index")
+    end
+
+    @router.add_route(:get, '/fruits') do # detta ser ut som en get-request
+      erb(:"views/fruits")
     end
 
     while (session = server.accept)
@@ -35,10 +44,9 @@ class HTTPServer
       request = Request.new(data)
       route = @router.match_route(request)
 
-      if route
-        # html = '<h1>Hello, World!</h1>'
-        html_template = File.read('views/index.erb')
-        html = ERB.new(html_template).result(binding)
+      if route # Måste göra så att det funkar för flera sidor!! _---------------
+        # html_template = File.read('views/index.erb')
+        html = route[:block].call #
         status = 200
       else
         html = '<h1>Oh no, World!</h1>'
