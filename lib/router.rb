@@ -3,6 +3,7 @@
 require_relative 'request'
 require 'debug'
 
+# Handles routing of HTTP requests to their corresponding handlers
 class Router
   def initialize
     @routes = []
@@ -14,17 +15,15 @@ class Router
 
   def match_route(request)
     base_path = request.resource.split('?').first
-
-    # @routes.each do |route|
-    #   next unless route[:method] == request.method
-    #   return route if route[:path] == base_path
-    # end
-
     @routes.find { |route| route[:method] == request.method && route[:path] == base_path }
   end
+
+  def get(path)
+    add_route(:get, path)
+    # match_route(Request.new("GET #{path}"))
+  end
+
+  # def self.post(path)
+  #   match_route(Request.new("POST #{path}"))
+  # end
 end
-
-router = Router.new
-
-router.add_route('GET', '/') { '<h1> HEJ </h1>' }
-router.add_route('POST', '/banan') { '<h2> DÅ </h2>' }

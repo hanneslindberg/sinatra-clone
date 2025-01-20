@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-# Klassen Request ansvarar för att analysera en HTTP-begäran från en rå sträng och bryta ner den
-# i komponenter som HTTP-metod, resursväg, headers, version och parametrar.
-# Klassen stödjer både GET- och POST-parametrar, och extraherar dem från query-strängen
-# eller från begärans kropp beroende på typ av förfrågan.
+# Parses and handles HTTP request data including method, headers, and parameters
 class Request
   attr_reader :method, :resource, :headers, :version, :params, :path
 
