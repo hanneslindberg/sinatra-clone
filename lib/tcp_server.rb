@@ -5,11 +5,13 @@ require 'debug'
 require 'erb'
 require_relative 'request'
 require_relative 'router'
-require_relative '../app'
 
 class HTTPServer
+  attr_accessor :router
+
   def initialize(port)
     @port = port
+    @router = nil
   end
 
   def erb(html_file)
@@ -17,16 +19,11 @@ class HTTPServer
     ERB.new(File.read(file)).result(binding)
   end
 
-  # def setup_routes
-  #   # @router.add_route(:get, '/') { erb(:"views/index") }
-  #   @router.add_route(:get, '/fruits') { erb(:"views/fruits") }
-  #   @router.add_route(:get, '/') { @app.get('/') }
-  # end
-
   def start
+    raise 'Router not set' unless @router
+
     server = TCPServer.new(@port)
     puts "Listening on #{@port}"
-    setup_routes
 
     while (session = server.accept)
       data = ''
@@ -61,6 +58,3 @@ class HTTPServer
     end
   end
 end
-
-# server = HTTPServer.new(4567)
-# server.start

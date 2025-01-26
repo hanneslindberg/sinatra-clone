@@ -18,6 +18,7 @@ class App < Router
 
   def self.run
     server = HTTPServer.new(4567)
+    # server.router = r
     server.start
   end
 end
