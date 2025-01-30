@@ -9,9 +9,9 @@ require_relative 'router'
 class HTTPServer
   attr_accessor :router
 
-  def initialize(port)
+  def initialize(port, router)
     @port = port
-    @router = nil
+    @router = router
   end
 
   def erb(html_file)
