@@ -22,4 +22,13 @@ class Router
   def get(path, &block)
     add_route(:get, path, &block)
   end
+
+  def regexp_to_route_path(route_path)
+    Regexp.new("^#{route_path.gsub(/:\w+/, '(\w+)')}$") # /frukt/:id/:namn
+  end
+
+  def extract_params(route_path)
+    route = regexp_to_route_path(route_path)
+    id, namn = /:\w+/.match?(route).captures
+  end
 end
