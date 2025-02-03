@@ -10,6 +10,7 @@ class Router
   end
 
   def add_route(method, path, &block)
+    # Regular expressions
     @routes << { method: method, path: path, block: block }
   end
 
@@ -18,12 +19,7 @@ class Router
     @routes.find { |route| route[:method] == request.method && route[:path] == base_path }
   end
 
-  def get(path)
-    add_route(:get, path)
-    # match_route(Request.new("GET #{path}"))
+  def get(path, &block)
+    add_route(:get, path, &block)
   end
-
-  # def self.post(path)
-  #   match_route(Request.new("POST #{path}"))
-  # end
 end

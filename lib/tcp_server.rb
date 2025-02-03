@@ -7,16 +7,9 @@ require_relative 'request'
 require_relative 'router'
 
 class HTTPServer
-  attr_accessor :router
-
   def initialize(port, router)
     @port = port
     @router = router
-  end
-
-  def erb(html_file)
-    file = html_file.to_s + '.erb'
-    ERB.new(File.read(file)).result(binding)
   end
 
   def start
