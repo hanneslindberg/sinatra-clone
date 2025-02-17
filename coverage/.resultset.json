@@ -159,6 +159,63 @@
           null
         ]
       },
+      "/Users/ellanaucler/Desktop/Code/Programmering 2/sinatra-clone/test/response_spec.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/ellanaucler/Desktop/Code/Programmering 2/sinatra-clone/lib/response.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null
+        ]
+      },
       "/Users/ellanaucler/Desktop/Code/Programmering 2/sinatra-clone/test/router_spec.rb": {
         "lines": [
           null,
@@ -217,10 +274,10 @@
           0,
           null,
           null,
+          1,
+          0,
           null,
-          null,
-          null,
-          null,
+          0,
           null,
           null,
           1,
@@ -228,12 +285,6 @@
           0,
           null,
           0,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
           null,
           null
         ]
@@ -259,6 +310,8 @@
           1,
           0,
           0,
+          0,
+          null,
           null,
           null,
           1,
@@ -284,6 +337,6 @@
         ]
       }
     },
-    "timestamp": 1739739481
+    "timestamp": 1739780887
   }
 }

@@ -16,7 +16,9 @@ class Router
 
   def match_route(request)
     base_path = request.resource.split('?').first
-    @routes.find { |route| route[:method] == request.method && route[:path] == base_path }
+    request_route = @routes.find do |route|
+      route[:method] == request.method && route[:path] == base_path
+    end
   end
 
   def get(path, &block)
@@ -24,7 +26,7 @@ class Router
   end
 
   def regex_to_route_path(route_path)
-    Regexp.new("^#{route_path.gsub(/:\w+/, '(\w+)')}$") # /^\/frukter\/(\w+)\/(\w+)$/
+    Regexp.new("^#{route_path.gsub(/:\w+/, '(\w+)')}$")
   end
 
   def extract_params(route_path, request_path)
@@ -33,7 +35,7 @@ class Router
 
     return {} unless match_data
 
-    param_names = route_path.scan(/:(\w+)/).flatten.map(&:to_sym) # [:id, :name]
+    param_names = route_path.scan(/:(\w+)/).flatten.map(&:to_sym)
     param_values = match_data.captures
 
     Hash[param_names.zip(param_values)]

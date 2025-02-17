@@ -54,23 +54,16 @@ describe 'Router' do # rubocop:disable Metrics/BlockLength
     _(matched_route[:path]).must_equal '/fruits'
   end
 
-  # it 'checks regex to reasorse' do
-  #   route_path = '/frukter/:id/:name'
+  it 'checks regex to reasorse' do
+    route_path = '/frukter/:id/:name'
 
-  #   _(@router.regex_to_route_path(route_path)).must_equal '/^\/frukter\/(\w+)\/(\w+)$/'
-  # end
+    _(@router.regex_to_route_path(route_path)).must_equal(%r{^/frukter/(\w+)/(\w+)$})
+  end
 
-  it 'checks what the match data is when extracting paramamiters' do
+  it 'extracts params from request' do
     route_path = '/frukter/:id/:name/:tastiness'
     request_path = '/frukter/1/banan/10'
 
     _(@router.extract_params(route_path, request_path)).must_equal({ id: '1', name: 'banan', tastiness: '10' })
-  end
-
-  it 'extracts params from request' do
-    route_path = '/^\/frukter\/(\w+)\/(\w+)$/'
-    request_path = '/frukter/:id/:name'
-
-    _(@router.extract_params(route_path, request_path)).must_equal %w[:id :name]
   end
 end

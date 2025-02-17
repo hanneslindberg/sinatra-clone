@@ -1,5 +1,32 @@
 class Response
-  def page_not_found
-    status = 404
+  attr_reader :status, :body
+
+  def initialize(status, body, headers = {})
+    @status = status
+    @body = body
+    @headers = headers
+  end
+
+  # response ska innehålla en status ---> HTTP/1.1 200 OK
+  # sedan headers                    ---> Content-Type: text/html
+  #                                       Content-Length: 123
+  # därefter en tom linje            ---> "\r\n"
+  # sedan bodyn                      ---> <html> "Hello World!" <html/>
+
+  def to_s
+    response = "HTTP/1.1 #{@status} #{status_message}\r\n"
+    header_section = @headers.map { |key, value| "#{key}: #{value}" }.join("\r\n")
+
+    response += "#{header_section}\r\n#{@body}"
+    response
+  end
+
+  def status_message
+    case @status
+    when 200 then 'OK'
+    when 302 then 'Found'
+    when 404 then 'Not Found'
+    else 'Unknown Status'
+    end
   end
 end
