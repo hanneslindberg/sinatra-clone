@@ -11,6 +11,10 @@ class App < SinatraClone
   r.get '/fruits' do
     erb :"views/fruits"
   end
+
+  r.get '/film' do
+    erb :"views/film"
+  end
 end
 
 App.run
