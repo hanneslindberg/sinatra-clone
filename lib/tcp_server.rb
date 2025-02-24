@@ -42,6 +42,7 @@ class HTTPServer
 
       response = Response.new(status, html)
       session.print response
+      puts "\n"
       puts "RESPONSE #{response.status}"
       puts '-' * 40
 

@@ -8,10 +8,10 @@ class Response
   end
 
   # response ska innehålla en status ---> HTTP/1.1 200 OK
-  # sedan headers                    ---> Content-Type: text/html
+  # sedan headers ----------------------> Content-Type: text/html
   #                                       Content-Length: 123
-  # därefter en tom linje            ---> "\r\n"
-  # sedan bodyn                      ---> <html> "Hello World!" <html/>
+  # därefter en tom linje --------------> "\r\n"
+  # sedan bodyn -------------------- ---> <html> "Hello World!" <html/>
 
   def to_s
     response = "HTTP/1.1 #{@status} #{status_message}\r\n"

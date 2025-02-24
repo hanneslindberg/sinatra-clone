@@ -15,6 +15,13 @@ class App < SinatraClone
   r.get '/film' do
     erb :"views/film"
   end
+
+  r.get '/add/:num1/:num2' do
+    # number1 = @params[:num1]
+    # number2 = @params[:num2]
+
+    erb :"views/add"
+  end
 end
 
 App.run

@@ -11,14 +11,22 @@ class Router
 
   def add_route(method, path, &block)
     # Regular expressions
+    # if route.include(":")
+    #   regex_to_route_path(route)
+    # end
+    # --------------------------------------------------------------------------------------------här skickas hash in som path i regex?
     @routes << { method: method, path: path, block: block }
   end
 
   def match_route(request)
     base_path = request.resource.split('?').first
+
     request_route = @routes.find do |route|
-      route[:method] == request.method && route[:path] == base_path
+      route[:method] == request.method && regex_to_route_path(route[:path]).match(base_path)
     end
+
+    @params = extract_params(request_route[:path], base_path)
+    request_route
   end
 
   def get(path, &block)
@@ -29,7 +37,7 @@ class Router
     Regexp.new("^#{route_path.gsub(/:\w+/, '(\w+)')}$")
   end
 
-  def extract_params(route_path, request_path)
+  def extract_params(route_path, request_path) # {:num1 => "1", :num2 => "2"}
     regex = regex_to_route_path(route_path)
     match_data = request_path.match(regex)
 
