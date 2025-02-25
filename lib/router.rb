@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'request'
+require_relative 'response'
 require 'debug'
 
 # Handles routing of HTTP requests to their corresponding handlers
@@ -25,8 +26,14 @@ class Router
       route[:method] == request.method && regex_to_route_path(route[:path]).match(base_path)
     end
 
-    @params = extract_params(request_route[:path], base_path)
-    request_route
+    if request_route
+      params = extract_params(request_route[:path], base_path)
+      request.params.merge!(params)
+      body = request_route[:block].call(request)
+      return @response.new(200, body)
+    end
+
+    return @response.new(200, )
   end
 
   def get(path, &block)
