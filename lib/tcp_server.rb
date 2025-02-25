@@ -30,21 +30,13 @@ class HTTPServer
       puts data
 
       request = Request.new(data)
-      route = @router.match_route(request)
-
-      if route
-        html = route[:block].call
-        status = 200
-      else
-        html = File.read('views/page_not_found.erb')
-        status = 404
-      end
-
-      response = Response.new(status, html)
-      session.print response
+      response = @router.match_route(request)
+      
       puts "\n"
       puts "RESPONSE #{response.status}"
       puts '-' * 40
+
+      session.print response
 
       # Nedanstående bör göras i er Response-klass
       # session.print "HTTP/1.1 #{status}\r\n"

@@ -6,7 +6,8 @@ require 'debug'
 
 # Handles routing of HTTP requests to their corresponding handlers
 class Router
-  def initialize
+  def initialize(response)
+    @response = response
     @routes = []
   end
 
@@ -33,7 +34,7 @@ class Router
       return @response.new(200, body)
     end
 
-    return @response.new(200, )
+    return @response.new(404, File.read('views\page_not_found.erb'))
   end
 
   def get(path, &block)

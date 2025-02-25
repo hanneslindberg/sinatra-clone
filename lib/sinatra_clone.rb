@@ -6,7 +6,7 @@ require 'debug'
 
 class SinatraClone
   def self.r
-    @r ||= Router.new
+    @r ||= Router.new(Response)
   end
 
   def self.erb(html_file)
