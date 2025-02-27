@@ -22,7 +22,13 @@ class App < SinatraClone
     @sum = num1 + num2
     puts "The sum is #{@sum}"
 
-    erb :"views/add"
+    erb :"views/dynamic_routes/add"
+  end
+
+  r.get '/fruits/:name' do | request |
+    @name = request.params[:name]
+
+    erb :"views/dynamic_routes/fruits"
   end
 end
 
