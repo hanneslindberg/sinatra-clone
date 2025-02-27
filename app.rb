@@ -20,7 +20,7 @@ class App < SinatraClone
     num1 = request.params[:num1].to_i
     num2 = request.params[:num2].to_i
     @sum = num1 + num2
-    puts @sum
+    puts "The sum is #{@sum}"
 
     erb :"views/add"
   end
