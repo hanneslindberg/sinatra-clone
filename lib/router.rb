@@ -29,6 +29,8 @@ class Router
 
     if request_route
       params = extract_params(request_route[:path], base_path)
+      puts request_route
+      puts "params: #{params}"
       request.params.merge!(params)
       body = request_route[:block].call(request)
       return @response.new(200, body)
@@ -39,6 +41,10 @@ class Router
 
   def get(path, &block)
     add_route(:get, path, &block)
+  end
+
+  def post(path, &block)
+    add_route(:post, path, &block)
   end
 
   def regex_to_route_path(route_path)

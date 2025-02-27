@@ -23,10 +23,8 @@ class Response
 
   def status_message
     case @status
-    when 200 then 'OK'
-    when 302 then 'Found'
-    when 404 then 'Not Found'
-    else 'Unknown Status'
+      when 200 then 'OK'
+      when 404 then 'Not Found'
     end
   end
 end

@@ -25,17 +25,16 @@ class HTTPServer
         data += line
       end
 
+      request = Request.new(data)
       puts 'RECEIVED REQUEST'
       puts '-' * 40
       puts data
-
-      request = Request.new(data)
-      response = @router.match_route(request)
+      puts "\n"
       
+      response = @router.match_route(request)
       puts "\n"
       puts "RESPONSE #{response.status}"
       puts '-' * 40
-
       session.print response
 
       # Nedanstående bör göras i er Response-klass
