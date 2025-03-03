@@ -12,11 +12,6 @@ class Router
   end
 
   def add_route(method, path, &block)
-    # Regular expressions
-    # if route.include(":")
-    #   regex_to_route_path(route)
-    # end
-    # --------------------------------------------------------------------------------------------här skickas hash in som path i regex?
     @routes << { method: method, path: path, block: block }
   end
 
@@ -33,10 +28,7 @@ class Router
     puts request_route
     puts "params: #{params}"
     request.params.merge!(params)
-    # body = request_route[:block].call(request)
     request_route
-
-    # @response.new(404, File.read('views\page_not_found.erb'))
   end
 
   def get(path, &block)

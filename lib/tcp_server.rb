@@ -29,26 +29,37 @@ class HTTPServer
       # data += session.gets(content_length)
 
       request = Request.new(data)
+      route = @router.match_route(request)
+
       puts '-' * 40
       puts 'RECEIVED REQUEST'
       puts '-' * 40
       puts data
       puts "\n"
 
-      route = @router.match_route(request)
-
-      puts "\n"
-      puts "Route: #{route}"
-      puts '-' * 40
+      puts "Request resource: #{request.resource}"
 
       if route
+        puts "Route: #{route}"
+        puts '-' * 40
+
         response = Response.new(200, route[:block].call(request), { 'Content-type' => 'text/html' })
-      elsif 1 == 2 # finns filen i filsystemet
-        file_path = '/img/film.jpeg'
-        response = Response.new(200, filens_innehåll, filens_content_type)
+      elsif File.file?("public#{request.resource}") # finns filen i filsystemet
+        file_path = "public#{request.resource}"
+        file_content = File.binread(file_path)
+        file_content_type = case File.extname(file_path)
+                            when '.jpeg', '.jpg' then 'image/jpeg'
+                            when '.png' then 'image/png'
+                            when '.gif' then 'image/gif'
+                            else 'application/octet-stream'
+                            end
+
+        response = Response.new(200, file_content, file_content_type)
       else
         response = Response.new(404, File.read('views/page_not_found.erb'), { 'Content-type' => 'text/html' })
       end
+
+      puts "Response: #{response.status}"
 
       # Nedanstående bör göras i er Response-klass
       session.print "HTTP/1.1 #{response.status}\r\n"
