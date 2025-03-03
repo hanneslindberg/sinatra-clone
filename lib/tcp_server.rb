@@ -47,7 +47,7 @@ class HTTPServer
       elsif File.file?("public#{request.resource}") # finns filen i filsystemet
         file_path = "public#{request.resource}"
         file_content = File.binread(file_path)
-        file_content_type = case File.extname(file_path)
+        file_content_type = case File.extname(file_path) # ska stödja alla mime types
                             when '.jpeg', '.jpg' then 'image/jpeg'
                             when '.png' then 'image/png'
                             when '.gif' then 'image/gif'
