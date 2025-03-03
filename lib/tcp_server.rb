@@ -44,17 +44,8 @@ class HTTPServer
         puts '-' * 40
 
         response = Response.new(200, route[:block].call(request), { 'Content-type' => 'text/html' })
-      elsif File.file?("public#{request.resource}") # finns filen i filsystemet
-        file_path = "public#{request.resource}"
-        file_content = File.binread(file_path)
-        file_content_type = case File.extname(file_path) # ska stödja alla mime types
-                            when '.jpeg', '.jpg' then 'image/jpeg'
-                            when '.png' then 'image/png'
-                            when '.gif' then 'image/gif'
-                            else 'application/octet-stream'
-                            end
-
-        response = Response.new(200, file_content, file_content_type)
+      elsif File.exist?("public#{request.resource}")
+        response = get_mime_type(request.resource)
       else
         response = Response.new(404, File.read('views/page_not_found.erb'), { 'Content-type' => 'text/html' })
       end
@@ -70,5 +61,26 @@ class HTTPServer
       # session.print response.to_s
       session.close
     end
+  end
+
+  def get_mime_type(path)
+    mime_types = {
+      'html' => 'text/html',
+      'css' => 'text/css',
+      'js' => 'application/javascript',
+      'jpg' => 'image/jpeg',
+      'jpeg' => 'image/jpeg',
+      'png' => 'image/png',
+      'gif' => 'image/gif',
+      'svg' => 'image/svg+xml',
+      'ico' => 'image/x-icon'
+    }.freeze
+
+    file_path = "public#{path}"
+    file_content = File.binread(file_path)
+    extension = File.extname(file_path).delete('.')
+    file_content_type = mime_types[extension] || 'application/octet-stream'
+
+    Response.new(200, file_content, file_content_type)
   end
 end
