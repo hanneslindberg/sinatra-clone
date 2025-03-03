@@ -30,7 +30,7 @@ class HTTPServer
       puts '-' * 40
       puts data
       puts "\n"
-      
+
       response = @router.match_route(request)
       puts "\n"
       puts "RESPONSE #{response.status}"

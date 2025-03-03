@@ -36,7 +36,7 @@ class Router
       return @response.new(200, body)
     end
 
-    return @response.new(404, File.read('views\page_not_found.erb'))
+    @response.new(404, File.read('views\page_not_found.erb'))
   end
 
   def get(path, &block)
