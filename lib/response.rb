@@ -1,5 +1,5 @@
 class Response
-  attr_reader :status, :body
+  attr_reader :status, :body, :headers
 
   def initialize(status, body, headers = {})
     @status = status

@@ -25,23 +25,36 @@ class HTTPServer
         data += line
       end
 
+      # kolla om det finns content-length och method är post
+      # data += session.gets(content_length)
+
       request = Request.new(data)
+      puts '-' * 40
       puts 'RECEIVED REQUEST'
       puts '-' * 40
       puts data
       puts "\n"
 
-      response = @router.match_route(request)
+      route = @router.match_route(request)
+
       puts "\n"
-      puts "RESPONSE #{response.status}"
+      puts "Route: #{route}"
       puts '-' * 40
-      session.print response
+
+      if route
+        response = Response.new(200, route[:block].call(request), { 'Content-type' => 'text/html' })
+      elsif 1 == 2 # finns filen i filsystemet
+        file_path = '/img/film.jpeg'
+        response = Response.new(200, filens_innehåll, filens_content_type)
+      else
+        response = Response.new(404, File.read('views/page_not_found.erb'), { 'Content-type' => 'text/html' })
+      end
 
       # Nedanstående bör göras i er Response-klass
-      # session.print "HTTP/1.1 #{status}\r\n"
-      # session.print "Content-Type: text/html\r\n"
-      # session.print "\r\n"
-      # session.print html
+      session.print "HTTP/1.1 #{response.status}\r\n"
+      session.print "Content-Type: #{response.headers['Content-type']}\r\n"
+      session.print "\r\n"
+      session.print response.body
 
       # session.print response.to_s
       session.close

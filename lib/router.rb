@@ -27,16 +27,16 @@ class Router
       route[:method] == request.method && regex_to_route_path(route[:path]).match(base_path)
     end
 
-    if request_route
-      params = extract_params(request_route[:path], base_path)
-      puts request_route
-      puts "params: #{params}"
-      request.params.merge!(params)
-      body = request_route[:block].call(request)
-      return @response.new(200, body)
-    end
+    return nil unless request_route
 
-    @response.new(404, File.read('views\page_not_found.erb'))
+    params = extract_params(request_route[:path], base_path)
+    puts request_route
+    puts "params: #{params}"
+    request.params.merge!(params)
+    # body = request_route[:block].call(request)
+    request_route
+
+    # @response.new(404, File.read('views\page_not_found.erb'))
   end
 
   def get(path, &block)
