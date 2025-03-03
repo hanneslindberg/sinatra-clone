@@ -35,6 +35,7 @@ class HTTPServer
       route = @router.match_route(request)
 
       puts '-' * 40
+      # puts request.params
       puts 'RECEIVED REQUEST'
       puts '-' * 40
       puts data
@@ -45,7 +46,6 @@ class HTTPServer
       if route
         puts "Route: #{route}"
         puts '-' * 40
-
         response = Response.new(200, route[:block].call(request), { 'Content-type' => 'text/html' })
       elsif File.exist?("public#{request.resource}")
         response = get_mime_type(request.resource)
