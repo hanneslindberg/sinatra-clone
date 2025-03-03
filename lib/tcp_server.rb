@@ -25,8 +25,11 @@ class HTTPServer
         data += line
       end
 
-      # kolla om det finns content-length och method är post
-      # data += session.gets(content_length)
+      content_length = data[/Content-Length:\s*(\d+)/i, 1].to_i
+      if content_length
+        data += "\n"
+        data += session.gets(content_length)
+      end
 
       request = Request.new(data)
       route = @router.match_route(request)
