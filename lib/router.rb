@@ -25,8 +25,8 @@ class Router
     return nil unless request_route
 
     params = extract_params(request_route[:path], base_path)
-    puts request_route
-    puts "params: #{params}"
+    # puts request_route
+    # puts "params: #{params}"
     request.params.merge!(params)
     request_route
   end
@@ -53,5 +53,9 @@ class Router
     param_values = match_data.captures
 
     Hash[param_names.zip(param_values)]
+  end
+
+  def redirect(url)
+    @response.new(302, '', { 'Location' => url })
   end
 end

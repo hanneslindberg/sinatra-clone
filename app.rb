@@ -30,6 +30,15 @@ class App < SinatraClone
   r.post '/login' do |request|
     puts "Username is: #{request.params[:username]}"
     puts "Password is: #{request.params[:password]}"
+
+    r.redirect '/profile'
+  end
+
+  r.get '/profile' do |request|
+    @username = request.params[:username]
+    @password = request.params[:password]
+
+    erb :"views/dynamic_routes/profile"
   end
 end
 

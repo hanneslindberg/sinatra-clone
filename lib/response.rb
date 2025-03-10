@@ -18,6 +18,7 @@ class Response
     header_section = @headers.map { |key, value| "#{key}: #{value}" }.join("\r\n")
 
     response += "#{header_section}\r\n#{@body}"
+    puts "Response: #{response}"
     response
   end
 
@@ -25,6 +26,7 @@ class Response
     case @status
     when 200 then 'OK'
     when 404 then 'Not Found'
+    when 302 then 'Found'
     end
   end
 end

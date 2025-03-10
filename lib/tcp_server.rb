@@ -45,7 +45,6 @@ class HTTPServer
 
       if route
         puts "Route: #{route}"
-        puts '-' * 40
         response = Response.new(200, route[:block].call(request), { 'Content-type' => 'text/html' })
       elsif File.exist?("public#{request.resource}")
         response = get_mime_type(request.resource)
@@ -55,13 +54,13 @@ class HTTPServer
 
       puts "Response: #{response.status}"
 
-      # Nedanstående bör göras i er Response-klass
       session.print "HTTP/1.1 #{response.status}\r\n"
       session.print "Content-Type: #{response.headers['Content-type']}\r\n"
       session.print "\r\n"
       session.print response.body
 
-      # session.print response.to_s
+      puts '-' * 40
+
       session.close
     end
   end
