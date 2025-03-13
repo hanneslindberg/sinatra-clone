@@ -40,7 +40,7 @@ class Request
   def parse_post_params(body_section)
     body_section.split('&').map do |param|
       key, value = param.split('=')
-      @params[key] = value
+      @params[key.to_sym] = value
     end
   end
 end

@@ -37,6 +37,7 @@ class App < SinatraClone
   r.get '/profile' do |request|
     @username = request.params[:username]
     @password = request.params[:password]
+    
 
     erb :"views/dynamic_routes/profile"
   end

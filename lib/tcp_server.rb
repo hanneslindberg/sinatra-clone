@@ -35,24 +35,18 @@ class HTTPServer
       route = @router.match_route(request)
 
       puts '-' * 40
-      # puts request.params
       puts 'RECEIVED REQUEST'
       puts '-' * 40
       puts data
       puts "\n"
 
-      puts "Request resource: #{request.resource}"
-
       if route
-        puts "Route: #{route}"
         response = Response.new(200, route[:block].call(request), { 'Content-type' => 'text/html' })
       elsif File.exist?("public#{request.resource}")
         response = get_mime_type(request.resource)
       else
         response = Response.new(404, File.read('views/page_not_found.erb'), { 'Content-type' => 'text/html' })
       end
-
-      puts "Response: #{response.status}"
 
       session.print "HTTP/1.1 #{response.status}\r\n"
       session.print "Content-Type: #{response.headers['Content-type']}\r\n"
