@@ -6,6 +6,8 @@ require 'erb'
 require_relative 'request'
 require_relative 'router'
 require_relative 'response'
+require_relative 'route_result'
+require_relative 'sinatra_clone'
 
 class HTTPServer
   def initialize(port, router)
@@ -40,13 +42,18 @@ class HTTPServer
       puts data
       puts "\n"
 
-      if route
-        response = Response.new(200, route[:block].call(request), { 'Content-type' => 'text/html' })
-      elsif File.exist?("public#{request.resource}")
-        response = get_mime_type(request.resource)
-      else
-        response = Response.new(404, File.read('views/page_not_found.erb'), { 'Content-type' => 'text/html' })
-      end
+      # check if redirect is called
+
+      puts route
+      response = if route
+                   puts route[:block].call(request)
+                   Response.new(200, route[:block].call(request), { 'Content-type' => 'text/html' })
+                 elsif File.exist?("public#{request.resource}") && request.resource.include?('.')
+                   get_mime_type(request.resource)
+                 else
+                   Response.new(404, File.read('views/page_not_found.erb'), { 'Content-type' => 'text/html' })
+                 end
+      p response
 
       session.print "HTTP/1.1 #{response.status}\r\n"
       session.print "Content-Type: #{response.headers['Content-type']}\r\n"
@@ -73,6 +80,8 @@ class HTTPServer
     }.freeze
 
     file_path = "public#{path}"
+    puts path
+    puts file_path
     file_content = File.binread(file_path)
     extension = File.extname(file_path).delete('.')
     file_content_type = mime_types[extension] || 'application/octet-stream'

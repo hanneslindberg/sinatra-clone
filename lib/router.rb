@@ -25,8 +25,7 @@ class Router
     return nil unless request_route
 
     params = extract_params(request_route[:path], base_path)
-    # puts request_route
-    # puts "params: #{params}"
+
     request.params.merge!(params)
     request_route
   end

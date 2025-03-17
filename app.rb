@@ -4,6 +4,8 @@ require_relative 'lib/sinatra_clone'
 
 # Main application class that handles routing and server initialization
 class App < SinatraClone
+  # include RouteResult
+
   r.get '/' do
     erb :"views/index"
   end
@@ -31,13 +33,12 @@ class App < SinatraClone
     puts "Username is: #{request.params[:username]}"
     puts "Password is: #{request.params[:password]}"
 
-    r.redirect '/profile'
+    redirect '/profile'
   end
 
   r.get '/profile' do |request|
     @username = request.params[:username]
     @password = request.params[:password]
-    
 
     erb :"views/dynamic_routes/profile"
   end
