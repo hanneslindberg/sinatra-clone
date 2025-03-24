@@ -10,33 +10,19 @@ class App < SinatraClone
     erb :"views/index"
   end
 
-  r.get '/fruits' do
-    erb :"views/fruits"
-  end
-
   r.get '/add/:num1/:num2' do |request|
     num1 = request.params[:num1].to_i
     num2 = request.params[:num2].to_i
     @sum = num1 + num2
-    puts "The sum is #{@sum}"
 
     erb :"views/dynamic_routes/add"
   end
 
-  r.get '/fruits/:name' do |request|
-    @name = request.params[:name]
-
-    erb :"views/dynamic_routes/fruits"
-  end
-
   r.post '/login' do |request|
-    puts "Username is: #{request.params[:username]}"
-    puts "Password is: #{request.params[:password]}"
-
-    redirect '/profile'
+    redirect "/profile/#{request.params[:username]}/#{request.params[:password]}"
   end
 
-  r.get '/profile' do |request|
+  r.get '/profile/:username/:password' do |request|
     @username = request.params[:username]
     @password = request.params[:password]
 

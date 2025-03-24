@@ -5,6 +5,8 @@ class Response
     @status = status
     @body = body
     @headers = headers
+    p @body
+    p @headers
   end
 
   # response ska innehålla en status ---> HTTP/1.1 200 OK
@@ -16,9 +18,9 @@ class Response
   def to_s
     response = "HTTP/1.1 #{@status} #{status_message}\r\n"
     header_section = @headers.map { |key, value| "#{key}: #{value}" }.join("\r\n")
-
-    response += "#{header_section}\r\n#{@body}"
-    puts "Response: #{response}"
+    response += header_section
+    response += "\r\n\r\n"
+    response += @body
     response
   end
 

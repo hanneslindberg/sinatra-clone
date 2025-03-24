@@ -2,7 +2,6 @@
 
 require_relative 'request'
 require_relative 'response'
-require 'debug'
 
 # Handles routing of HTTP requests to their corresponding handlers
 class Router
@@ -55,6 +54,6 @@ class Router
   end
 
   def redirect(url)
-    @response.new(302, '', { 'Location' => url })
+    @response.new(302, "", { 'Location' => url })
   end
 end
