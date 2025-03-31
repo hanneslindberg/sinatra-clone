@@ -15,6 +15,7 @@ class HTTPServer
     @router = router
   end
 
+  # A hash of all required mime tyoes and thair content type
   MIME_TYPES = {
     'html' => 'text/html',
     'css' => 'text/css',
@@ -32,37 +33,55 @@ class HTTPServer
     puts "Listening on #{@port}"
 
     while (session = server.accept)
-      data = ''
-      while (line = session.gets) && line !~ /^\s*$/
-        data += line
-      end
-
-      content_length = data[/Content-Length:\s*(\d+)/i, 1].to_i
-      if content_length
-        data += "\n"
-        data += session.gets(content_length)
-      end
-
-      request = Request.new(data)
-      route = @router.match_route(request)
-
-      if route
-        route_block = route[:block].call(request)
-
-        response = if route_block.class != String && route_block[:status] && route_block[:status] == 302
-                     Response.new(route_block[:status], route_block[:body], route_block[:headers])
-                   else
-                     Response.new(200, route_block, { 'Content-type' => 'text/html' })
-                   end
-      elsif File.exist?("public#{request.resource}") && request.resource.include?('.')
-        response = get_mime_type(request.resource)
-      else
-        response = Response.new(404, File.read('views/404.erb'), { 'Content-type' => 'text/html' })
-      end
-
-      session.print response.to_s
-
+      handle_request(session)
       session.close
+    end
+  end
+
+  private
+
+  def handle_request(session)
+    request = parse_request(session)
+    response = process_request(request)
+    session.print response.to_s
+  end
+
+  def parse_request(session)
+    data = read_headers(session)
+    content_length = data[/Content-Length:\s*(\d+)/i, 1].to_i
+
+    data += "\n" + session.gets(content_length) if content_length
+
+    Request.new(data)
+  end
+
+  def read_headers(session)
+    data = ''
+    while (line = session.gets) && line !~ /^\s*$/
+      data += line
+    end
+    data
+  end
+
+  def process_request(request)
+    route = @router.match_route(request)
+
+    if route
+      handle_route(route, request)
+    elsif File.exist?("public#{request.resource}") && request.resource.include?('.')
+      get_mime_type(request.resource)
+    else
+      Response.new(404, File.read('views/404.erb'), { 'Content-type' => 'text/html' })
+    end
+  end
+
+  def handle_route(route, request)
+    route_block = route[:block].call(request)
+
+    if route_block.class != String && route_block[:status] && route_block[:status] == 302
+      Response.new(route_block[:status], route_block[:body], route_block[:headers])
+    else
+      Response.new(200, route_block, { 'Content-type' => 'text/html' })
     end
   end
 
