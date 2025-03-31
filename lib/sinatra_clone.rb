@@ -17,7 +17,7 @@ class SinatraClone
   # @param html_file [String, Symbol] the name of the ERB template to render
   # @return [String] the rendered HTML content
   def self.erb(html_file)
-    file = html_file.to_s + '.erb'
+    file = "#{html_file}.erb"
     ERB.new(File.read(file)).result(binding)
   end
 
