@@ -3,9 +3,10 @@
 require_relative 'tcp_server'
 require_relative 'router'
 
+# A lightweight web framework inspired by Sinatra, handling HTTP requests and routing
 class SinatraClone
   def self.r
-    @r ||= Router.new(Response)
+    @r ||= Router.new
   end
 
   def self.erb(html_file)
@@ -23,5 +24,6 @@ class SinatraClone
     hash[:status] = 302
     hash[:body] = ''
     hash[:headers] = { 'Location' => path }
+    hash
   end
 end

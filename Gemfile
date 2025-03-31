@@ -13,3 +13,5 @@ gem 'rubycritic', require: false
 gem 'simplecov', require: false
 
 gem 'debug', '~> 1.0.0'
+
+gem 'yard'

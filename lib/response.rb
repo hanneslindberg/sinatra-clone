@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Represents an HTTP response with status, body, and headers
 class Response
   attr_reader :status, :body, :headers
 
@@ -5,8 +8,6 @@ class Response
     @status = status
     @body = body
     @headers = headers
-    p @body
-    p @headers
   end
 
   # response ska innehålla en status ---> HTTP/1.1 200 OK
@@ -14,7 +15,7 @@ class Response
   #                                       Content-Length: 123
   # därefter en tom linje --------------> "\r\n"
   # sedan bodyn -------------------- ---> <html> "Hello World!" <html/>
-
+  #
   def to_s
     response = "HTTP/1.1 #{@status} #{status_message}\r\n"
     header_section = @headers.map { |key, value| "#{key}: #{value}" }.join("\r\n")

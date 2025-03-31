@@ -5,8 +5,7 @@ require_relative 'response'
 
 # Handles routing of HTTP requests to their corresponding handlers
 class Router
-  def initialize(response)
-    @response = response
+  def initialize
     @routes = []
   end
 
@@ -51,9 +50,5 @@ class Router
     param_values = match_data.captures
 
     Hash[param_names.zip(param_values)]
-  end
-
-  def redirect(url)
-    @response.new(302, "", { 'Location' => url })
   end
 end

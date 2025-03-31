@@ -7,22 +7,14 @@
 </head>
 <body>
     <h1>Hello Korv</h1>
-    <h2>Korv med bröd</h2>
-    <h1><%= Time.now %></h1>
-    <a href="/fruits">Frukter</a>
-    <h1>Login</h1>
+
+    <h3>Log in:</h3>
     <form action="/login" method="post">
         <input type="text" name="username" placeholder="Username">
-
         <input type="password" name="password" placeholder="Password">
-
         <button type="submit">Login</button>
     </form>
     
-    <form action="/testish" method="post">
-        <button type="submit">submit</button>
-    </form>
-
     <img src="/img/film.jpeg" alt="Film">
     <img src="/img/rotating_earth.gif" alt="Rotating earth">
 </body>
